@@ -1,2 +1,4 @@
 # bamazon-homework
-An sql database to hold information for an online market place
+An SQL database for an online market place:
+----------------------------------------------------
+
