@@ -1,23 +1,44 @@
+require('dotenv').config();
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-// create the connection information for the sql database
+
 var connection = mysql.createConnection({
   host: "localhost",
 
-  // Your port; if not 3306
-  port: 8000,
-
-  // Your username
   user: "root",
 
-  // Your password
   password: process.env.PASS,
-  database: "bamazon_db"
+  database: "bamazon"
 });
 
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log("connected as id " + connection.threadId + "\n");
-  //createProduct();
+connection.connect() ;
+
+var bamazonT
+
+connection.query('SELECT * FROM products', function(err, results, someFunction){
+  if(err){
+    console.log(err);
+  };
+  console.log("Check Out These Sweet Products, Yo");
+  bamazonT = console.table(results);
+  console.log(bamazonT);
 });
+
+inquirer.prompt(
+  {
+    type: 'number',
+    name: 'product_id',
+    message: 'Id if product you want to buy',
+  },
+  {
+    type: 'number',
+    name: 'quantity',
+    message: 'How many would you like to buy?',
+  }
+).then(function(response, error){
+  if(error) throw error;
+  console.log(response);
+})
+
+connection.end();
